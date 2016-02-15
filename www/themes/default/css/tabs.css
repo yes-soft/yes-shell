@@ -1,0 +1,56 @@
+.nav-tabs > .tab-item {
+  height: 34px;
+  float: left;
+  position: relative;
+  /*     &:first-child > li > a {
+      padding: 3px 20px;
+  } */
+}
+.nav-tabs > .tab-item > a {
+  position: absolute;
+  top: 8px;
+  padding: 0;
+  right: 8px;
+  cursor: pointer;
+  border: 0;
+}
+.nav-tabs > .tab-item > a:hover {
+  background: transparent;
+}
+.nav-tabs > .tab-item > li {
+  float: left;
+  height: 100%;
+  margin-bottom: -1px;
+}
+.nav-tabs > .tab-item > li > a {
+  cursor: pointer;
+  height: 100%;
+  display: block;
+  padding: 8px 60px 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 11px 11px 0 0;
+  overflow: hidden;
+  background: #FBFBFB;
+}
+.nav-tabs > .tab-item > li.active a,
+.nav-tabs > .tab-item > li.active a:hover,
+.nav-tabs > .tab-item > li.active a:focus {
+  color: #555;
+  font-weight: bold;
+  cursor: default;
+  background-color: #fff;
+  border-bottom-color: transparent;
+}
+.tab-content-view {
+  margin: 10px 0;
+}
+.tab-page .nav.nav-tabs {
+  margin: 0 10px;
+}
+.tab-page .tab-content {
+  margin-top: -1px;
+  border-top: 1px solid #D7D7D7;
+}
+.tab-page .tab-content-inner {
+  margin: 0 10px;
+}

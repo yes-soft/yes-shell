@@ -1,0 +1,343 @@
+.tree {
+  margin: auto;
+  padding: 0 0 0 9px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+.tree .tree-selected {
+  background-color: rgba(98, 168, 209, 0.16);
+}
+.tree:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  top: -20px;
+  bottom: 16px;
+  left: 0;
+  z-index: 1;
+  border: 1px dotted #67B2DD;
+  border-width: 0 0 0 1px;
+}
+.tree .tree-branch-name,
+.tree .tree-item-name {
+  cursor: pointer;
+}
+.tree .icon-caret {
+  vertical-align: baseline !important;
+}
+.tree .tree-branch {
+  width: auto;
+  min-height: 20px;
+  min-width: 120px;
+  cursor: pointer;
+}
+.tree .tree-branch .tree-branch-header {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+}
+.tree .tree-branch .tree-branch-header:hover {
+  background-color: rgba(98, 168, 209, 0.1);
+}
+.tree .tree-branch .icon-caret + .tree-branch-header {
+  display: inline-block;
+}
+.tree .tree-branch.tree-selected > .tree-branch-header {
+  background-color: rgba(98, 168, 209, 0.18);
+}
+.tree .tree-branch .nav-list {
+  position: relative;
+  left: 7px;
+}
+.tree .tree-branch .tree-branch-header .tree-branch-name,
+.tree .tree-item .tree-item-name {
+  display: inline;
+  z-index: 2;
+}
+.tree .tree-branch .tree-branch-header > .tree-branch-name > .ace-icon:first-child,
+.tree .tree-item > .tree-item-name > .ace-icon:first-child {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  top: -1px;
+}
+.tree .tree-branch > .tree-branch-header > .tree-branch-name > .tree-label {
+  margin-left: 2px;
+}
+.tree .tree-branch:last-child:after {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  bottom: 0;
+  left: -15px;
+  border-left: 1px solid #e7e7e7;
+}
+.tree .tree-branch .tree-branch-children {
+  margin: 0 0 0 23px;
+  padding: 0;
+  position: relative;
+}
+.tree .tree-branch .tree-branch-children:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  bottom: 16px;
+  left: -14px;
+  border: 1px dotted #67B2DD;
+  border-width: 0 0 0 1px;
+}
+.tree .tree-branch.tree-selected > .icon-caret + .tree-branch-header > .tree-branch-name > .tree-label {
+  font-weight: bold;
+}
+.tree .tree-item {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+.tree .tree-item:hover {
+  background-color: rgba(98, 168, 209, 0.1);
+}
+.tree .tree-item > .tree-item-name > .ace-icon:first-child {
+  margin-right: 3px;
+}
+.tree .tree-item > .tree-item-name > .tree-label > .ace-icon:first-child {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.tree .tree-item > .ace-icon:first-child {
+  margin-top: -1px;
+}
+.tree .tree-branch,
+.tree .tree-item {
+  position: relative;
+  list-style: none;
+}
+.tree .tree-branch:before,
+.tree .tree-item:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: -13px;
+  width: 18px;
+  height: 0;
+  border-top: 1px dotted #67B2DD;
+  z-index: 1;
+}
+.tree .tree-item,
+.tree .tree-branch {
+  border-left: 1px solid transparent;
+  margin: 1px 0;
+}
+.tree .tree-branch .tree-branch-header {
+  border-radius: 0;
+}
+.tree .tree-item,
+.tree .tree-branch .tree-branch-header {
+  padding: 3px 5px;
+  color: #4D6878;
+  box-sizing: content-box;
+}
+.tree .tree-item > .tree-item-name > .ace-icon:first-child {
+  color: #F9E8CE;
+  width: 13px;
+  height: 13px;
+  line-height: 13px;
+  font-size: 11px;
+  text-align: center;
+  border-radius: 3px;
+  box-sizing: content-box;
+  background-color: #FAFAFA;
+  border: 1px solid #CCC;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.tree .tree-selected > .tree-item-name > .ace-icon:first-child {
+  background-color: #F9A021;
+  border-color: #F9A021;
+  color: #FFF;
+}
+.tree .tree-plus.ace-icon:first-child,
+.tree .tree-minus.ace-icon:first-child {
+  display: inline-block;
+  font-style: normal;
+  vertical-align: middle;
+  height: 11px;
+  width: 11px;
+  box-sizing: content-box;
+  text-align: center;
+  border: 1px solid #8BAEBF;
+  line-height: 10px;
+  background-color: #FFF;
+  position: relative;
+  z-index: 2;
+}
+.tree .tree-plus.ace-icon:first-child:before,
+.tree .tree-minus.ace-icon:first-child:before {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 0;
+  border-top: 1px solid #4D6878;
+  position: absolute;
+  top: 5px;
+  left: 2px;
+}
+.tree .tree-plus.ace-icon:first-child:after {
+  content: "";
+  display: block;
+  height: 7px;
+  width: 0;
+  border-left: 1px solid #4D6878;
+  position: absolute;
+  top: 2px;
+  left: 5px;
+}
+.tree .tree-unselectable .tree-item > .tree-item-name > .tree-label > .ace-icon:first-child {
+  color: #5084A0;
+  width: 13px;
+  height: 13px;
+  line-height: 13px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.tree .ace-icon[class*="-down"] {
+  transform: rotate(-45deg);
+}
+.tree .ace-icon[class*="-download"] {
+  transform: none;
+}
+.tree .fa-spin {
+  height: auto;
+}
+.tree .tree-loading {
+  margin-left: 36px;
+}
+.tree img {
+  display: inline;
+  veritcal-align: middle;
+}
+.tree .icon-open {
+  width: 16px;
+  position: relative;
+  z-index: 2;
+  padding-left: 2px;
+}
+.tree .tree .tree-open > .tree-branch-header .icon-open {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.tree-container {
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  border-left-color: #67B2DD;
+  display: block;
+  padding: 0;
+  max-width: 200px;
+  max-height: 250px;
+}
+.tree-container .tree::before {
+  margin-left: -1px;
+}
+.tree-branch-children {
+  overflow: visible;
+}
+.abn-tree-animate-enter,
+li.abn-tree-row.ng-enter {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  opacity: 0;
+  max-height: 0;
+}
+.abn-tree-animate-enter.abn-tree-animate-enter-active,
+li.abn-tree-row.ng-enter-active {
+  opacity: 1;
+  max-height: 30px;
+}
+.abn-tree-animate-leave,
+li.abn-tree-row.ng-leave {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  height: 30px;
+  max-height: 30px;
+  opacity: 1;
+}
+.abn-tree-animate-leave.abn-tree-animate-leave-active,
+li.abn-tree-row.ng-leave-active {
+  height: 0;
+  max-height: 0;
+  opacity: 0;
+}
+/*
+------------------------------------------
+Angular 1.2.0 Animation
+*/
+/*
+   end animation stuff
+-----------------------------------------
+   begin normal css stuff
+*/
+ul.abn-tree li.abn-tree-row {
+  padding: 0;
+  margin: 0;
+}
+ul.abn-tree li.abn-tree-row a {
+  padding: 3px 10px;
+}
+ul.abn-tree i.indented {
+  padding: 2px;
+}
+.abn-tree {
+  cursor: pointer;
+}
+ul.nav.abn-tree .level-1 .indented {
+  position: relative;
+  left: 0;
+}
+ul.nav.abn-tree .level-2 .indented {
+  position: relative;
+  left: 20px;
+}
+ul.nav.abn-tree .level-3 .indented {
+  position: relative;
+  left: 40px;
+}
+ul.nav.abn-tree .level-4 .indented {
+  position: relative;
+  left: 60px;
+}
+ul.nav.abn-tree .level-5 .indented {
+  position: relative;
+  left: 80px;
+}
+ul.nav.abn-tree .level-6 .indented {
+  position: relative;
+  left: 100px;
+}
+ul.nav.nav-list.abn-tree .level-7 .indented {
+  position: relative;
+  left: 120px;
+}
+ul.nav.nav-list.abn-tree .level-8 .indented {
+  position: relative;
+  left: 140px;
+}
+ul.nav.nav-list.abn-tree .level-9 .indented {
+  position: relative;
+  left: 160px;
+}
+.tree .tree-branch .tree-branch-header {
+  padding: 3px 0;
+}

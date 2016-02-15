@@ -1,0 +1,142 @@
+.navbar.navbar-fixed-top {
+  margin-bottom: 0;
+  min-height: 45px;
+}
+.navbar-nav > li > a {
+  padding: 12px 15px;
+}
+#wrapper {
+  padding-top: 45px;
+  width: 100%;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.modal-content {
+  padding-bottom: 20px;
+}
+.panel-body {
+  padding: 0;
+}
+.panel-group .panel {
+  border-radius: 0;
+}
+.tight abbr[title] {
+  border-bottom: 0;
+}
+.tight .sidebar-shortcuts input {
+  width: 100%;
+  padding-left: 10px;
+}
+.tight .sidebar-shortcuts .input-icon i {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.tight .navbar.navbar-fixed-top {
+  height: 42px;
+}
+.operation {
+  margin-bottom: 10px;
+}
+.operation button {
+  margin-right: 5px;
+}
+.sidebar {
+  z-index: 1000;
+  position: fixed;
+  left: 210px;
+  width: 0;
+  height: 100%;
+  margin-left: -210px;
+  overflow-y: auto;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #F7F7F7;
+  border-right: 1px solid #D7D7D7;
+}
+.sidebar h4 {
+  font-size: 12px;
+}
+.sidebar .tree-branch-header {
+  /*min-width: 160px;*/
+}
+.sidebar .panel-heading {
+  padding: 0;
+}
+.sidebar .panel-title > a {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+}
+#wrapper.toggled .sidebar {
+  width: 210px;
+}
+.main-content {
+  width: 100%;
+  position: relative;
+}
+.content-view {
+  margin: 10px;
+}
+#wrapper.toggled .main-content {
+  position: absolute;
+  margin-right: -210px;
+}
+.side-menu {
+  display: block;
+  list-style: none;
+  padding-left: 15px;
+}
+.side-menu .dropdown a {
+  display: inline-block;
+  width: 100%;
+}
+.side-menu .caret {
+  position: absolute;
+  right: 15%;
+  top: 8px;
+}
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 210px;
+  }
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+  .sidebar {
+    width: 210px;
+  }
+  #wrapper.toggled .sidebar {
+    width: 0;
+  }
+  .side-menu {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  header .navbar-header {
+    position: absolute;
+    left: 50%;
+    margin-left: -95px;
+  }
+  .navbar-toggle-hide {
+    display: none;
+  }
+}
+.breadcrumb {
+  margin-bottom: 0;
+  padding: 9px 20px 10px 20px;
+  font-size: 12px;
+  border-bottom: 1px solid #D7D7D7;
+}
+.breadcrumb i {
+  font-size: 16px;
+  color: #555;
+}
+.welcome-title {
+  padding: 50px;
+}

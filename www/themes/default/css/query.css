@@ -1,0 +1,60 @@
+.list-queries {
+  border: 1px solid #ddd;
+  border-left: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.tightly .list-queries.base-form {
+  padding: 0;
+}
+.tightly .list-queries.base-form ui-query {
+  padding: 0 5px;
+}
+.tightly .list-queries.base-form .control-label {
+  padding: 0;
+}
+.list-queries .buttons-wrap {
+  height: 32px;
+  padding-left: 10px;
+  padding-top: 4px;
+  margin-bottom: -1px;
+  border-left: 1px solid #ddd;
+  text-align: center;
+  float: left;
+  display: block;
+}
+.list-queries .buttons-wrap button {
+  margin: 0 10px;
+}
+.list-queries ui-query {
+  height: 32px;
+  margin-bottom: -1px;
+  border: 1px solid #ddd;
+  border-width: 0 0 1px 1px;
+}
+.list-queries ui-query .col.caption {
+  line-height: 22px;
+}
+.list-queries .ui-select-toggle {
+  padding: 1px 5px;
+}
+.list-queries .input-group {
+  margin: 0;
+}
+.list-queries .input-group .input-group-btn button {
+  margin-top: -1px;
+}
+.list-queries label {
+  margin-bottom: 0;
+  padding-left: 10px;
+  font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.list-queries .ui-select-bootstrap > .ui-select-choices {
+  min-width: 70%;
+  left: auto;
+  right: 0;
+}

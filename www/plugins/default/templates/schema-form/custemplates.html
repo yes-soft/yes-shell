@@ -1,0 +1,14 @@
+<div class="form-group schema-form-table single-line" >
+<div class="col-xs-12 col-sm-12 clearfix">
+            <div class="col caption">
+                  <label class="control-label {{form.labelHtmlClass}}" title="{{form.title | translate}}" ng-class="{'sr-only': !showTitle(),'required':form.required}"
+                         for="{{form.key.slice(-1)[0]}}">{{form.title | translate}}</label>
+            </div>
+
+            <div class="col content form-table" >
+                 <div ng-include="form.templateUrl">
+            </div>
+      </div>
+
+      <div class="help-block clearfix text-right" sf-message="form.description"></div>
+</div>

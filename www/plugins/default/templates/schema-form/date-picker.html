@@ -1,0 +1,18 @@
+<div class="form-group" ng-class="{'has-error': hasError()}">
+    <div class="col-xs-12 col-sm-12 clearfix">
+        <div class="col caption">
+            <label class="control-label {{form.labelHtmlClass}}" ng-class="{'sr-only': !showTitle(),'required':form.required}" for="{{form.key.slice(-1)[0]}}">{{form.title | translate }}
+            </label>
+        </div>
+        <div class="col content">
+            <div class="input-group">
+                <input type="text" class="form-control uib-datepicker ng-pristine ng-isolate-scope ng-valid-date ng-invalid ng-invalid-required ng-touched" uib-datepicker-popup="" ng-model="ngModel[option.name]" is-open="opened" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" required="required">
+                <!-- ngIf: isOpen -->
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="opened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </div>
+        </div>
+    </div>
+    <div class="help-block" sf-message="form.description"></div>
+</div>

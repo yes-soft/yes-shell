@@ -1,0 +1,47 @@
+.ui-grid-menu-button {
+  top: -1px;
+  right: -1px;
+  height: 29px;
+}
+.ui-grid-pager-container {
+  position: relative;
+  padding: 0 10px;
+}
+.ui-grid-pager-container .total-wrap,
+.ui-grid-pager-container .page-size-selector,
+.ui-grid-pager-container .ui-grid-pager-bar {
+  float: left;
+  display: inline-block;
+}
+.ui-grid-pager-container .pagination {
+  margin: 0;
+}
+.ui-grid-pager-container .total-wrap {
+  line-height: 32px;
+  padding: 0 5px;
+}
+.ui-grid-pager-container .page-size-selector {
+  min-width: 70px;
+  padding: 1px 5px;
+}
+.ui-grid-row:hover .ui-grid-cell {
+  background: #2a88be;
+  color: #fff;
+}
+.ui-grid-sort-priority-number {
+  visibility: hidden;
+}
+.ui-grid-pager-control input,
+.ui-grid-pager-row-count-picker select {
+  padding-top: 0;
+}
+.ui-grid-top-panel {
+  font-weight: normal;
+}
+.ui-grid-pager-panel .ui-select-bootstrap > .ui-select-match > .btn {
+  height: 30px;
+  line-height: 28px;
+}
+.page-size-selector {
+  margin-top: -1.5px;
+}

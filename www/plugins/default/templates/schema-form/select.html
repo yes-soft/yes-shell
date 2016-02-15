@@ -1,0 +1,45 @@
+<div class="form-group {{form.htmlClass}} schema-form-select"
+     ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false}">
+
+    <div class="col caption">
+        <label class="control-label {{form.labelHtmlClass}}" title="{{form.title | translate}}" ng-class="{'sr-only': !showTitle(),'required':form.required}" 
+        		for="{{form.key.slice(-1)[0]}}">
+       		{{form.title | translate}}
+        </label>
+    </div>
+    <div class="col content">
+        <div ng-class="{'input-group': (form.fieldAddonLeft || form.fieldAddonRight)}">
+            <ui-select ng-model-options="form.ngModelOptions" 
+            		   ng-model="$$value$$"
+                       theme="bootstrap"
+                       ng-disabled="form.readonly"
+                       ng-change="form.onChange($select.selected);"
+                       reset-search-input="true"
+                       schema-validate="form"
+                       style="min-width: 120px;"
+                       id="{{form.key.slice(-1)[0]}}">
+                <ui-select-match placeholder="{{form.placeholder|translate}}">{{$select.selected.name}}</ui-select-match>
+
+                <ui-select-choices
+                        refresh="form.refresh(form,$select.search)"
+                        refresh-delay="0"
+                        repeat="item.value as item in form.titleMap | filter:$select.search">
+                    <div class="select2-item" ng-bind-html="item.name | highlight: $select.search"></div>
+                    <small ng-if="form.small" ng-bind-html="item.value | highlight: $select.search | translate"></small>
+                </ui-select-choices>
+            </ui-select>
+
+	        <span ng-if="form.fieldAddonRight"
+	              class="input-group-btn">
+	            <button class="btn btn-default btn-sm" ng-click="form.dialog(form,$parent)"
+	                    type="button">
+	                <i class="fa {{form.fieldAddonRight}}"></i>
+	            </button>
+	        </span>
+        </div>
+        <span ng-if="hasError() || hasSuccess()"
+                    id="{{form.key.slice(-1)[0] + 'Status'}}"
+                    class="sr-only">{{ hasSuccess() ? '(success)' : '(error)' }}</span>
+    </div>
+    <div class="help-block clearfix" sf-message="form.description"></div>
+</div>

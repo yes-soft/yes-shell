@@ -1,0 +1,51 @@
+.ngdialog {
+  text-align: center;
+}
+.ngdialog-overlay {
+  z-index: -1;
+}
+.ngdialog-content {
+  margin: 100px auto;
+  padding: 5px;
+  display: inline-block;
+  text-align: initial;
+  border-radius: 4px;
+  overflow-y: auto;
+}
+.ngdialog-content .base-form {
+  padding-bottom: 30px;
+  border: 1px dashed #aaa;
+}
+.ngdialog-content .dialog-confirm {
+  padding: 10px 0;
+  text-align: center;
+}
+.ngdialog-content .dialog-confirm .dialog-buttons button {
+  margin: 0 10px;
+}
+.ngdialog-xs .ngdialog-content {
+  width: 250px;
+}
+.ngdialog-sm .ngdialog-content {
+  width: 500px;
+}
+.ngdialog-md .ngdialog-content {
+  width: 800px;
+}
+.ngdialog-lg .ngdialog-content {
+  width: 1000px;
+}
+.ngdialog-full .ngdialog-content {
+  width: 100%;
+}
+@media (max-width: 800px) {
+  .ngdialog-md .ngdialog-content {
+    width: 100%;
+  }
+  .ngdialog-lg .ngdialog-content {
+    width: 100%;
+  }
+  .ngdialog-full .ngdialog-content {
+    width: 100%;
+  }
+}
