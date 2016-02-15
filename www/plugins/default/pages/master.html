@@ -1,0 +1,18 @@
+<header class="navbar navbar-inverse navbar-fixed-top">
+
+    <div class="navbar-header">
+        <ui-logo ui-href="#">logo</ui-logo>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li ng-repeat="item in menus">
+            <a ng-href="{{item.url}}">
+                {{item.name}}
+            </a>
+        </li>
+    </ul>
+</header>
+
+<section style="margin-top: 50px">
+    <div ui-view="content"></div>
+</section>
