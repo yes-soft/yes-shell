@@ -1,1 +1,1 @@
-require('cmd.js');
+require('./cmd.js');
