@@ -1,6 +1,6 @@
 {
   "name": "yes-ui",
-  "version": "3.3.0",
+  "version": "3.3.2",
   "description": "A shell to generate yes ui framework",
   "main": "index.js",
   "bin": {
@@ -27,6 +27,8 @@
   "homepage": "https://github.com/yes-soft/yes-shell#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "fs-extra": "^0.26.5"
+    "fs-extra": "^0.26.5",
+    "http-server": "^0.8.5",
+    "portfinder": "^1.0.1"
   }
 }
