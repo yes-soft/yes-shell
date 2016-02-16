@@ -28,7 +28,9 @@
   "dependencies": {
     "commander": "^2.9.0",
     "fs-extra": "^0.26.5",
+    "gulp-replace": "^0.5.4",
     "http-server": "^0.8.5",
-    "portfinder": "^1.0.1"
+    "portfinder": "^1.0.1",
+    "vinyl-fs": "^2.3.1"
   }
 }

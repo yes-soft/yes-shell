@@ -7,9 +7,11 @@ var fs = require('fs-extra'),
     exec = require('child_process').exec,
     path = require('path'),
     config = require('./package.json'),
+    replace = require('gulp-replace'),
     os = require('os'),
     portfinder = require('portfinder'),
-    httpServer = require('http-server');
+    httpServer = require('http-server'),
+    vfs = require('vinyl-fs');
 
 function listen(port, host) {
     var options = {
@@ -49,50 +51,27 @@ commander
         console.log('Hit CTRL-C to stop the server');
     });
 
-//commander
-//    .command('exec [args]')
-//    .description('start current project')
-//    .action(function (args) {
-//        //exec('httpserver', function (err, stdout) {
-//        //    if (err) throw err;
-//        //    console.log(stdout);
-//        //    process.stdout.write(stdout);
-//        //});
-//    });
 
 commander
     .command('new <project>')
     .description('create project')
     .action(function (project) {
         currentDir = path.resolve(currentDir, project);
-        fs.copy(__dirname + '/www', currentDir, function (fsErr) {
+        var srcDir = __dirname + '/www';
+
+        fs.copy(srcDir, currentDir, function (fsErr) {
             if (fsErr) return console.error(fsErr);
-            fs.move(currentDir + "/plugins/default",
+            fs.move(currentDir + "/plugins/$default",
                 currentDir + '/plugins/' + project, function (err) {
                     if (err) return console.error(err);
                     console.log("success!");
                 });
+            var filePath = srcDir + '/index.js';
+            vfs.src(filePath)
+                .pipe(replace(/\$default/g, project))
+                .pipe(vfs.dest(currentDir));
         });
+
     });
 
 commander.parse(process.argv);
-
-
-if (process.platform === 'win32') {
-    require('readline').createInterface({
-        input: process.stdin,
-        output: process.stdout
-    }).on('SIGINT', function () {
-        process.emit('SIGINT');
-    });
-}
-
-process.on('SIGINT', function () {
-    console.log('yes-ui stopped.'.red);
-    process.exit();
-});
-
-process.on('SIGTERM', function () {
-    console.log('yes-ui stopped.'.red);
-    process.exit();
-});
