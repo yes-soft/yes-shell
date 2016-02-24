@@ -1,0 +1,10 @@
+{
+  "name": "base",
+  "version": "0.1.0",
+  "description": "JFMS Base",
+  "author": "yes-soft",
+  "dependencies": {
+    "desktop": "^3.5.5"
+  },
+  "root": true
+}

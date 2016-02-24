@@ -38,15 +38,20 @@ function copyPluginToName(name, newName) {
 
     fs.copy(srcDir, dist, function (fsErr) {
         if (fsErr) return console.error(fsErr);
+
+        var config = require(srcDir + "/config.json");
+        if (config && config.root) {
+
+            changeDefaultPluginName(dest, 'desktop'); //TODO
+        }
     });
 }
 
-function changeDefaultPluginName(newName, dest) {
+function changeDefaultPluginName(newName, core, dest) {
 
     var dist = dest || currentDir;
-    var filePath = __dirname + '/www/index.js';
+    var filePath = __dirname + '/' + core + '/index.js';
     vfs.src(filePath)
-        // .pipe(replace(/pluginDefaultName:\s\/'\w+/g, "pluginDefaultName: " + "'" + project + "'"))
         .pipe(replace(/\$default/g, newName))
         .pipe(vfs.dest(dist));
 }
@@ -73,26 +78,61 @@ commander
     });
 
 commander
-    .command('add <plugin> [name]')
+    .command('plugin <method> <name>')
     .description('add a plugin to project')
-    .action(function (plugin) {
-        copyPluginToName(plugin, name);
-        console.log("plugin added!");
+    .action(function (method, name) {
+        var action = {
+            "add": function (name) {
+                copyPluginToName(name);
+            },
+            "new": function (name) {
+                copyPluginToName("$default", name);
+            }
+        };
+
+        if (action.hasOwnProperty(method)) {
+            action[method](name);
+            console.log("plugin added!");
+        } else {
+            console.log("plugin " + method, "not exist!");
+        }
     });
 
 commander
-    .command('new <project> [name]')
+    .command('project <method> [core] [project]')
     .description('create project')
-    .action(function (project, name) {
-        currentDir = path.resolve(currentDir, project);
-        var srcDir = __dirname + '/www';
-        var pluginName = name || "$default";
-        fs.copy(srcDir, currentDir, function (fsErr) {
-            if (fsErr) return console.error(fsErr);
-            copyPluginToName(pluginName, project);
-            changeDefaultPluginName(project);
-            console.log("project created!");
-        });
+    .action(function (method, core, project) {
+
+        var action = {
+            "new": function (core, project) {
+                if (core && project) {
+                    copyCore(core, project);
+                    console.log("project created!");
+                } else {
+                    console.log("required argument core and project");
+                }
+            },
+            "build": function () {
+                console.log("project built!");
+            }
+        };
+
+        if (action.hasOwnProperty(method)) {
+            action[method](core, project);
+        } else {
+            console.log("project " + method, "not exist!");
+        }
     });
+
+function copyCore(core, project) {
+
+    currentDir = path.resolve(currentDir, project);
+    var srcDir = __dirname + '/' + core;
+
+    fs.copy(srcDir, currentDir, function (fsErr) {
+        if (fsErr) return console.error(fsErr);
+
+    });
+}
 
 commander.parse(process.argv);
