@@ -15,6 +15,15 @@ var fs = require('fs-extra'),
 
 var currentDir = process.cwd();
 
+var getLibPath = function () {
+    var cfg = require('./lib.json');
+    if (cfg && cfg.uri) {
+        return cfg.uri;
+    } else {
+        return __dirname + "/resources";
+    }
+};
+
 function listen(port, host) {
     var options = {
         root: './',
@@ -27,14 +36,14 @@ function listen(port, host) {
     var server = httpServer.createServer(options);
 
     server.listen(port, host, function () {
-        console.log("yes-ui serving", "127.0.0.1:", port);
+        console.log("yes-ui serving", "127.0.0.1:" + port);
     });
 }
 
 function copyPluginToName(name, newName) {
     var dest = newName || name;
     var dist = path.resolve(currentDir, "plugins/" + dest);
-    var srcDir = __dirname + '/plugins/' + name;
+    var srcDir = getLibPath() + '/plugins/' + name;
 
     fs.copy(srcDir, dist, function (fsErr) {
         if (fsErr) return console.error(fsErr);
@@ -75,6 +84,24 @@ commander
             listen(port);
         });
         console.log('Hit CTRL-C to stop the server');
+    });
+
+commander
+    .command('lib <protocol> <uri>')
+    .description('add a plugin to project')
+    .action(function (protocol, uri) {
+
+        if (protocol && uri) {
+
+            var json = {
+                protocol: protocol,
+                uri: uri
+            };
+            var ws = fs.createOutputStream('./lib.json');
+            ws.write(JSON.stringify(json));
+        } else {
+            console.log("require protocol and uri");
+        }
     });
 
 commander
@@ -127,7 +154,7 @@ commander
 function copyCore(core, project) {
 
     currentDir = path.resolve(currentDir, project);
-    var srcDir = __dirname + '/' + core;
+    var srcDir = getLibPath() + '/' + core;
 
     fs.copy(srcDir, currentDir, function (fsErr) {
         if (fsErr) return console.error(fsErr);
