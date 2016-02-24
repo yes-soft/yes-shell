@@ -13,6 +13,8 @@ var fs = require('fs-extra'),
     httpServer = require('http-server'),
     vfs = require('vinyl-fs');
 
+var currentDir = process.cwd();
+
 function listen(port, host) {
     var options = {
         root: './',
@@ -29,7 +31,26 @@ function listen(port, host) {
     });
 }
 
-var currentDir = process.cwd();
+function copyPluginToName(name, newName) {
+    var dest = newName || name;
+    var dist = path.resolve(currentDir, "plugins/" + dest);
+    var srcDir = __dirname + '/plugins/' + name;
+
+    fs.copy(srcDir, dist, function (fsErr) {
+        if (fsErr) return console.error(fsErr);
+    });
+}
+
+function changeDefaultPluginName(newName, dest) {
+
+    var dist = dest || currentDir;
+    var filePath = __dirname + '/www/index.js';
+    vfs.src(filePath)
+        // .pipe(replace(/pluginDefaultName:\s\/'\w+/g, "pluginDefaultName: " + "'" + project + "'"))
+        .pipe(replace(/\$default/g, newName))
+        .pipe(vfs.dest(dist));
+}
+
 
 commander.usage('[command] <options ...>');
 
@@ -52,38 +73,26 @@ commander
     });
 
 commander
-    .command('add <plugin>')
+    .command('add <plugin> [name]')
     .description('add a plugin to project')
     .action(function (plugin) {
-        var dist = path.resolve(currentDir, "plugins/" + plugin);
-        var srcDir = __dirname + '/plugins/' + plugin;
-
-        fs.copy(srcDir, dist, function (fsErr) {
-            if (fsErr) return console.error(fsErr);
-        });
+        copyPluginToName(plugin, name);
+        console.log("plugin added!");
     });
 
 commander
-    .command('new <project>')
+    .command('new <project> [name]')
     .description('create project')
-    .action(function (project) {
+    .action(function (project, name) {
         currentDir = path.resolve(currentDir, project);
         var srcDir = __dirname + '/www';
-
+        var pluginName = name || "$default";
         fs.copy(srcDir, currentDir, function (fsErr) {
             if (fsErr) return console.error(fsErr);
-            fs.move(currentDir + "/plugins/$default",
-                currentDir + '/plugins/' + project, function (err) {
-                    if (err) return console.error(err);
-                    console.log("success!");
-                });
-            var filePath = srcDir + '/index.js';
-            vfs.src(filePath)
-                // .pipe(replace(/pluginDefaultName:\s\/'\w+/g, "pluginDefaultName: " + "'" + project + "'"))
-                .pipe(replace(/\$default/g, project))
-                .pipe(vfs.dest(currentDir));
+            copyPluginToName(pluginName, project);
+            changeDefaultPluginName(project);
+            console.log("project created!");
         });
-
     });
 
 commander.parse(process.argv);
