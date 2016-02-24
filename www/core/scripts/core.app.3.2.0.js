@@ -107308,8 +107308,9 @@ angular.module('base.ui.query', []).directive('uiQuery', [
     'utils',
     '$http',
     '$templateCache',
+	'settings',
     '$compile',
-    function (utils, $http, $templateCache, $compile) {
+    function (utils, $http, $templateCache, settings, $compile) {
         return {
             restrict: 'EA',
             scope: {
@@ -107319,11 +107320,21 @@ angular.module('base.ui.query', []).directive('uiQuery', [
             require: 'ngModel',
             link: function (scope, element, attrs, ngModel) {
                 scope.option = scope.option || {};
-                $http.get("ui/templates/query/" + utils.snakeCase(scope.option.type, '-') + ".html",
-                    {cache: $templateCache})
-                    .success(function (html) {
-                        element.html('').append($compile(html)(scope));
-                    });
+
+				if(!scope.option.hasOwnProperty('type'))
+					return;
+				var templateUrl = "ui/templates/query/" + utils.snakeCase(scope.option.type, '-') + ".html";
+				var queryPool = settings.queryPool || {};
+
+				if (queryPool.hasOwnProperty(scope.option.type)) {
+					templateUrl = queryPool[scope.option.type];
+				}
+
+				$http.get(templateUrl,
+					{cache: $templateCache})
+					.success(function (html) {
+						element.html('').append($compile(html)(scope));
+					});
             }
         };
 

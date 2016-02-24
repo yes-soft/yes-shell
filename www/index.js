@@ -4,8 +4,8 @@
 
     var settings = {
         host: 'self', //当前API调用的主机头
-        mock: window.debugging || false,  //如果是mock状态则API调取得静态的目录data下的json
-        debug: window.debugging || false, //如启用debug 则服务log 输出日志
+        mock: true,  //如果是mock状态则API调取得静态的目录data下的json
+        debug: true, //如启用debug 则服务log 输出日志
         apiPrefix: "api", //api调用的地址前缀
         language: 'zh-CN', //当前语言的设定
         pageSize: 20, //分页默认大小,
@@ -30,7 +30,7 @@
         templates: {},
         plugins: {},
         components: {},
-        pluginDefaultName: 'default'
+        pluginDefaultName: 'base'
     };
 
     settings.templates = {
@@ -40,22 +40,10 @@
     };
 
     /**
-     * 插件的设置项
+     * 插件的业务组件声明
      */
-    settings.plugins.base = {
-        version: "x.x.x",
-        getByAttIdUrl: "/base/attachment/getByAttId",
-        uploadUrl: "/base/attachment/upload",
-        getUuid: "/base/attachment/getUuid",
-        delByUid: "/base/attachment/"
-    };
-
-    /**
-     * 插件的业务组件声明,不要手动修改
-     */
-    settings.components.base = ['base.uploader', 'base.gallery'];
+    settings.components.base = [];
 
     application.bootstrap(settings);
-
 
 }());

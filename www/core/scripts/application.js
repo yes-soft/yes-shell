@@ -2,6 +2,7 @@
 
     window.application = {
         bootstrap: function (settings) {
+
             settings.routers = {
                 'app': {
                     url: '',
@@ -62,6 +63,7 @@
                 }
             };
 
+            settings.queryPool = {};
 
             angular.module('app.settings', [
                 'infrastructure',
@@ -146,6 +148,8 @@
              * @returns {{resolver: *[]}|*}
              */
             function resolves(dependencies) {
+
+
                 var definition;
                 definition = {
                     resolver: ['$ocLazyLoad', '$stateParams', 'settings',
@@ -158,22 +162,22 @@
                                         dep = dep.replace('{$' + key + '}', $stateParams[key]);
                                     }
                                 }
-                                if (dep.indexOf("$") < 0)
+                                if (dep.indexOf("{$") < 0)
                                     list.push(dep);
                             });
 
                             setPageTemplate($stateParams);
+
                             return $ocLazyLoad.load(list).then(function (res) {
 
                             }, function (e) {
-                                console.log(e);
+                                console.log("load error:", e);
                             });
                         }]
                 };
 
                 return definition;
             }
-
 
             /**
              * 处理别名指令
@@ -195,7 +199,6 @@
                 });
             }
 
-
             function snakeCase(name, separator) {
                 separator = separator || '_';
                 return name.replace(/[A-Z]/g, function (letter, pos) {
@@ -203,50 +206,60 @@
                 });
             }
 
-            function regFormCtrl(p, name) {
-
-                p.addMapping(
+            function registerSchemaFormComponent(provider, name, tplUrl) {
+                provider.addMapping(
                     'bootstrapDecorator',
                     name,
-                    "plugins/" + settings.pluginDefaultName + "/templates/forms/" + snakeCase(name, '-') + ".html"
+                    tplUrl
                 );
-                p.createDirective(
+                provider.createDirective(
                     name,
-                    "plugins/" + settings.pluginDefaultName + "/templates/forms/" + snakeCase(name, '-') + ".html"
+                    tplUrl
                 );
             }
 
-            function registerSchemaForm(p) {
-                var forms = [
+            function registerSchemaForms(provider) {
+
+                angular.forEach(settings.schemaFormComponents, function (items, key) {
+                    angular.forEach(items, function (item) {
+                        registerSchemaFormComponent(provider, key + '-' + item, 'plugins/' +
+                            key + '/templates/schema-form/' + item + '.html');
+                    });
+                });
+
+                var baseSchemaForms = [
                     'group',
                     'select-multiple',
                     'select2',
-                    'uploader',
-                    'gallery',
+                    'select',
                     'editor',
+                    'textarea',
                     'datePicker',
                     'dateTimePicker',
                     'dateRangePicker',
                     'checkboxes-inline',
-                    'inputdialog',
-                    'custemplates',
                     'label',
-                    'columns',
-                    'columns-remark',
-                    'radios-inline-remark'
+                    'columns'
                 ];
 
-                angular.forEach(settings.components, function (c) {
-                    if (angular.isArray(c)) {
-                        angular.forEach(c, function (form) {
-                            regFormCtrl(p, form);
-                        })
-                    }
+                angular.forEach(baseSchemaForms, function (item) {
+                    registerSchemaFormComponent(provider, item,
+                        'ui/templates/forms/' + item + '.html');
                 });
 
-                angular.forEach(forms, function (form) {
-                    regFormCtrl(p, form);
+            }
+
+            function registerQueryForms() {
+                angular.forEach(settings.queryFormComponents, function (items, key) {
+                    angular.forEach(items, function (item) {
+                        registerQueryFormComponent(key + '-' + item, 'plugins/' +
+                            key + '/templates/query-form/' + item + '.html');
+                    });
                 });
+            }
+
+            function registerQueryFormComponent(name, tplUrl) {
+                settings.queryPool[name] = tplUrl;
             }
 
             angular.module('app').config(
@@ -284,7 +297,9 @@
                     $translateProvider.preferredLanguage('zh-CN');
                     $translateProvider.useSanitizeValueStrategy(null);
                     settingsProvider.setSettings(settings);
-                    registerSchemaForm(schemaFormDecoratorsProvider);
+
+                    registerSchemaForms(schemaFormDecoratorsProvider);
+                    registerQueryForms();
                     initRouters(settings, $stateProvider, $urlRouterProvider);
                     alias(settings.alias, $compileProvider);
                 });
@@ -292,7 +307,16 @@
             require.config({
                 baseUrl: settings.baseUrl || ""
             });
-            require([], function () {
+
+            var components = [];
+
+            angular.forEach(settings.components, function (items, key) {
+                angular.forEach(items, function (item) {
+                    components.push('plugins/' + key + '/directives/' + item);
+                });
+            });
+
+            require(components, function () {
                 angular.bootstrap(document, ['app']);
             });
 

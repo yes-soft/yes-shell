@@ -1933,3 +1933,8 @@ label {
 .flat {
   border-radius: 0 !important;
 }
+
+
+.toolbar-wrap{
+  padding: 10px 10px 0 10px;
+}

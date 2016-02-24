@@ -140,3 +140,11 @@
 .welcome-title {
   padding: 50px;
 }
+
+.ui-logo img {
+  max-width: 160px;
+}
+
+.toolbar-wrap{
+  padding: 10px 10px 0 10px;
+}
