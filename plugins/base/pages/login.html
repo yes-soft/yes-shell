@@ -1,0 +1,84 @@
+<div class="base-login">
+    <div class="login-layout">
+        <div class="main-container">
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <div class="login-container">
+                            <div class="position-relative">
+                                <div id="login-box" class="login-box visible widget-box no-border">
+                                    <div class="widget-body">
+                                        <div class="widget-main">
+                                            <h4 class="header blue lighter bigger">
+                                                <i class="ace-icon fa fa-coffee green"></i>
+                                                {{'用户登录' | translate}}
+                                            </h4>
+
+                                            <div class="space-6"></div>
+
+                                            <form ng-submit="login()">
+                                                <fieldset>
+                                                    <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" ng-model="vm.loginName"
+                                       placeholder="{{'用户名' | translate}}"/>
+                                <i class="ace-icon fa fa-user"></i>
+                            </span>
+                                                    </label>
+
+                                                    <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <input type="password" class="form-control" ng-model="vm.password"
+                                       placeholder="{{'密码' | translate}}"/>
+                                <i class="ace-icon fa fa-lock"></i>
+                            </span>
+                                                    </label>
+
+                                                    <div class="space"></div>
+
+                                                    <div class="clearfix">
+                                                        <label class="inline" style="cursor: pointer;">
+                                                            <input type="checkbox" class="ace" ng-model="rememberPwd"
+                                                                   value="true"/>
+                                                            <span class="lbl brand" style="padding-left: 0;  ">  {{"记住密码" | translate}}</span>
+                                                        </label>
+                                                        <label class="inline">
+	                                                    <span ng-click="forgotPwd();" class="lbl brand"
+                                                              style="padding-left: 0;margin-left: 15px;  cursor: pointer;">
+	                                                      {{"忘记密码?" | translate}}
+	                                                    </span>
+                                                        </label>
+
+                                                        <button type="submit"
+                                                                class="width-35 pull-right btn btn-sm btn-primary">
+                                                            <i class="ace-icon fa fa-key"></i>
+                                                            <span class="bigger-110"> {{"登录" | translate}}</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="space-4"></div>
+                                                </fieldset>
+                                            </form>
+
+                                            <div class="space-6"></div>
+
+                                        </div>
+                                        <!-- /.widget-main -->
+                                    </div>
+                                    <!-- /.widget-body -->
+                                </div>
+                                <!-- /.login-box -->
+                            </div>
+                            <!-- /.position-relative -->
+
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.main-content -->
+        </div>
+        <!-- /.main-container -->
+    </div>
+</div>

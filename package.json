@@ -1,6 +1,6 @@
 {
   "name": "yes-ui",
-  "version": "3.3.2",
+  "version": "3.3.4",
   "description": "A shell to generate yes ui framework",
   "main": "index.js",
   "bin": {

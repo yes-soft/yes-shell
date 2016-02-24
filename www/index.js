@@ -30,7 +30,7 @@
         templates: {},
         plugins: {},
         components: {},
-        pluginDefaultName: 'base'
+        pluginDefaultName: '$default'
     };
 
     settings.templates = {

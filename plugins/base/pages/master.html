@@ -1,0 +1,94 @@
+<div class="layout">
+    <header class="navbar navbar-inverse navbar-fixed-top">
+        <button data-target="#wrapper.sidebar" ng-click="minSize=!minSize"
+                data-toggle="collapse"
+                type="button"
+                class="navbar-toggle collapsed pull-left">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header">
+            <ui-logo ui-href="#">logo</ui-logo>
+        </div>
+
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav hidden-xs">
+                <li>
+                    <a ng-click="minSize=!minSize"><i ng-class="{'fa-indent':minSize}" class="fa fa-outdent click "></i></a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav hidden-xs">
+                <li ng-repeat="item in menus" ng-class="{'active':item.active}">
+                    <a class="click" ng-click="action.nav(item, menus)">
+                        {{item.name}}
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="displayName" class="dropdown">
+                    <a data-toggle="dropdown">{{displayName}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="action.logout()">注销</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section id="wrapper" ng-class="{'toggled':minSize}">
+        <div ng-show="treeSource" class="sidebar">
+            <div class="nav-search">
+                <form class="navbar-form">
+                    <div class="form-group">
+                        <input type="text" ng-model="search"
+                               uib-typeahead="menu.name for menu in getMenus($viewValue)"
+                               typeahead-on-select="onSelect($item, $model, $label)"
+                               class="form-control" placeholder="搜索">
+                    </div>
+                </form>
+                <ul class="side-menu hidden-lg hidden-md">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown">菜单<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="item in menus">
+                                <a ng-click="action.nav(item)">
+                                    {{item.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-repeat="item in treeSource ">
+                <ui-tree open-method="openMethod" ng-if="item.children" resource="item.children"></ui-tree>
+            </div>
+
+            <!--<uib-accordion close-others="false">-->
+            <!--<uib-accordion-group ng-repeat="item in treeSource " is-open="true"-->
+            <!--heading="{{item.name}}">-->
+            <!--<ui-tree ng-if="item.children" resource="item.children"></ui-tree>-->
+            <!--</uib-accordion-group>-->
+            <!--</uib-accordion>-->
+        </div>
+
+        <div class="main-content">
+            <div class="main-content-inner">
+                <div class="toolbar-wrap">
+                    <div class="toolbar">
+                        <button ng-repeat="operation in operations" class="btn btn-sm btn-default"
+                                ng-click="operation.action()">
+                            <i class="ace-icon fa {{operation.icon}}" ng-style="{'color': operation.color}"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="content-view tab-content-view" ui-view="content"></div>
+            </div>
+        </div>
+    </section>
+    <footer></footer>
+</div>

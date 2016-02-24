@@ -38,7 +38,7 @@ commander.option('-v, --version', 'output the version number', function () {
 });
 
 commander
-    .command('start [args]')
+    .command('start')
     .description('start current project')
     .action(function (args) {
         portfinder.basePort = 8080;
@@ -51,6 +51,17 @@ commander
         console.log('Hit CTRL-C to stop the server');
     });
 
+commander
+    .command('add <plugin>')
+    .description('add a plugin to project')
+    .action(function (plugin) {
+        var dist = path.resolve(currentDir, "plugins/" + plugin);
+        var srcDir = __dirname + '/plugins/' + plugin;
+
+        fs.copy(srcDir, dist, function (fsErr) {
+            if (fsErr) return console.error(fsErr);
+        });
+    });
 
 commander
     .command('new <project>')
@@ -68,6 +79,7 @@ commander
                 });
             var filePath = srcDir + '/index.js';
             vfs.src(filePath)
+                // .pipe(replace(/pluginDefaultName:\s\/'\w+/g, "pluginDefaultName: " + "'" + project + "'"))
                 .pipe(replace(/\$default/g, project))
                 .pipe(vfs.dest(currentDir));
         });
