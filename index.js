@@ -3,12 +3,14 @@
 'use strict';
 
 var fs = require('fs-extra'),
+    rfs = require('fs'),
     commander = require('commander'),
     exec = require('child_process').exec,
     path = require('path'),
     config = require('./package.json'),
     replace = require('gulp-replace'),
     os = require('os'),
+    glob = require('glob'),
     portfinder = require('portfinder'),
     httpServer = require('http-server'),
     vfs = require('vinyl-fs');
@@ -53,19 +55,10 @@ function copyPluginToName(name, newName) {
             if (fsErr) return console.error(fsErr);
             var config = require(srcDir + "/config.json");
             if (config && config.root) {
-                changeDefaultPluginName(pluginName, core);
+                autoConfigPlugin();
             }
         });
     }
-}
-
-function changeDefaultPluginName(newName, core, dest) {
-    var dist = dest || currentDir;
-    dist = dist + "/core/scripts";
-    var filePath = getLibPath() + '/' + core + '/core/core/scripts/application.js';
-    vfs.src(filePath)
-        .pipe(replace(/\$default/g, newName))
-        .pipe(vfs.dest(dist));
 }
 
 function copyCore(core, project) {
@@ -102,6 +95,70 @@ function getCoreType() {
         console.log("core missing config.json");
     }
     return false;
+}
+
+function scanPlugins() {
+
+    var pluginFolder = currentDir + '/plugins';
+    var plugins = glob.sync(pluginFolder + '/*/*.json');
+    var settings = {
+        components: {},
+        queryFormComponents: {},
+        schemaFormComponents: {}
+    };
+    var pluginConfig = {};
+
+    plugins.forEach(function (uri) {
+        var pluginName = path.basename(path.parse(uri).dir);
+        var directives = getFileNames(currentDir + '/plugins/' + pluginName + '/directives/**/*.js', '.js');
+        var queryFormComponents = getFileNames(
+            currentDir + '/plugins/' + pluginName + '/templates/query-form/*.html', '.html');
+        var schemaFormComponents = getFileNames(
+            currentDir + '/plugins/' + pluginName + '/templates/schema-form/*.html', '.html');
+
+        settings.components[pluginName] = directives;
+        settings.queryFormComponents[pluginName] = queryFormComponents;
+        settings.schemaFormComponents[pluginName] = schemaFormComponents;
+
+        var cfg = require(uri);
+        if (cfg && cfg.settings) {
+            pluginConfig[pluginName] = cfg.settings;
+        }
+
+        if (cfg && cfg.root) {
+            settings['pluginDefaultName'] = pluginName;
+        }
+    });
+
+    settings.plugins = pluginConfig;
+    console.log("scan plugin completed!");
+    return settings;
+}
+
+function getFileNames(src, ext) {
+    var items = glob.sync(src);
+    var fileNames = [];
+    items.forEach(function (p) {
+        var name = path.basename(p, ext);
+        fileNames.push(name);
+    });
+    return fileNames;
+}
+
+function autoConfigPlugin() {
+    var coreType = getCoreType();
+    if (coreType) {
+        var to = currentDir + "/plugins";
+        var from = getLibPath() + '/' + coreType + '/plugins/config.js';
+
+        var pluginInfo = scanPlugins();
+        var jsContent = JSON.stringify(pluginInfo);
+        var str = "application.plugin = " + jsContent;
+
+        vfs.src(from)
+            .pipe(replace("var $code_template = true;", str))
+            .pipe(vfs.dest(to));
+    }
 }
 
 commander.usage('[command] <options ...>');
@@ -178,7 +235,7 @@ commander
                 }
             },
             "build": function () {
-                console.log("project built!");
+                autoConfigPlugin();
             }
         };
 

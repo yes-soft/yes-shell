@@ -22,8 +22,9 @@
     window.application = {
         bootstrap: function (settings) {
 
-            if (settings.autoConfig !== false)
-                autoConfig(settings);
+            if (application.plugin) {
+                angular.extend(settings, application.plugin);
+            }
 
             settings.routers = {
                 'app': {
