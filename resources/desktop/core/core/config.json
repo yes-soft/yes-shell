@@ -1,0 +1,9 @@
+{
+  "name": "Desktop",
+  "version": "3.1.0",
+  "description": "JFMS Desktop Core",
+  "author": "yes-soft",
+  "dependencies": {
+  },
+  "type": "desktop"
+}

@@ -41,30 +41,68 @@ function listen(port, host) {
 }
 
 function copyPluginToName(name, newName) {
-    var dest = newName || name;
-    var dist = path.resolve(currentDir, "plugins/" + dest);
-    var srcDir = getLibPath() + '/plugins/' + name;
 
-    fs.copy(srcDir, dist, function (fsErr) {
-        if (fsErr) return console.error(fsErr);
+    var core = getCoreType();
+    if (core) {
 
-        var config = require(srcDir + "/config.json");
-        if (config && config.root) {
+        var pluginName = newName || name;
+        var dist = path.resolve(currentDir, "plugins/" + pluginName);
+        var srcDir = getLibPath() + '/' + core + '/plugins/' + name;
 
-            changeDefaultPluginName(dest, 'desktop'); //TODO
-        }
-    });
+        fs.copy(srcDir, dist, function (fsErr) {
+            if (fsErr) return console.error(fsErr);
+            var config = require(srcDir + "/config.json");
+            if (config && config.root) {
+                changeDefaultPluginName(pluginName, core);
+            }
+        });
+    }
 }
 
 function changeDefaultPluginName(newName, core, dest) {
-
     var dist = dest || currentDir;
-    var filePath = __dirname + '/' + core + '/index.js';
+    dist = dist + "/core/scripts";
+    var filePath = getLibPath() + '/' + core + '/core/core/scripts/application.js';
     vfs.src(filePath)
         .pipe(replace(/\$default/g, newName))
         .pipe(vfs.dest(dist));
 }
 
+function copyCore(core, project) {
+
+    if (checkCore(core)) {
+        currentDir = path.resolve(currentDir, project);
+        var srcDir = getLibPath() + "/" + core + '/core';
+
+        fs.copy(srcDir, currentDir, function (fsErr) {
+            if (fsErr) return console.error(fsErr);
+        });
+    }
+}
+
+function checkCore(name) {
+    var core = {
+        desktop: 'desktop',
+        mobile: 'mobile'
+    };
+
+    if (core[name])
+        return name;
+    else
+        console.log('core name not exist');
+    return false;
+}
+
+function getCoreType() {
+    var coreCfg = currentDir + '/core/config.json';
+    var cfg = require(coreCfg);
+    if (cfg && cfg.type) {
+        return cfg.type;
+    } else {
+        console.log("core missing config.json");
+    }
+    return false;
+}
 
 commander.usage('[command] <options ...>');
 
@@ -97,7 +135,7 @@ commander
                 protocol: protocol,
                 uri: uri
             };
-            var ws = fs.createOutputStream('./lib.json');
+            var ws = fs.createOutputStream(__dirname + '/lib.json');
             ws.write(JSON.stringify(json));
         } else {
             console.log("require protocol and uri");
@@ -151,15 +189,5 @@ commander
         }
     });
 
-function copyCore(core, project) {
-
-    currentDir = path.resolve(currentDir, project);
-    var srcDir = getLibPath() + '/' + core;
-
-    fs.copy(srcDir, currentDir, function (fsErr) {
-        if (fsErr) return console.error(fsErr);
-
-    });
-}
 
 commander.parse(process.argv);

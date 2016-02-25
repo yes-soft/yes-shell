@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta charset="utf-8"/>
+    <title ng-cloak>{{title}}</title>
+    <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="core/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="core/vendor/angular-ui-grid/ui-grid.min.css">
+    <link rel="stylesheet" href="core/vendor/angular-ui-select/select.min.css">
+    <link rel="stylesheet" href="core/vendor/ng-dialog/css/ng-dialog.min.css">
+    <link rel="stylesheet" href="core/vendor/ng-dialog/css/ngDialog-theme-default.min.css">
+    <link rel="stylesheet" href="core/vendor/angular-toastr/angular-toastr.min.css">
+    <link rel="stylesheet" href="core/vendor/datepicker/date.min.css">
+
+    <link rel="stylesheet" href="themes/default/css/style.css">
+</head>
+<body class="ng-cloak tightly">
+<div ui-view=""></div>
+<script src="core/scripts/core.app.3.2.0.js"></script>
+<script>
+    angular.module('app', ['app.settings']);
+</script>
+
+<script src="core/vendor/tinymce/tinymce.min.js"></script>
+<script src="core/vendor/tinymce/angular.tinymce.js"></script>
+<script src="core/vendor/highcharts/highcharts.js"></script>
+
+<script src="core/scripts/templates.js"></script>
+<script src="core/scripts/application.js"></script>
+<script src="core/vendor/require.js" data-main="index.js"></script>
+</body>
+</html>

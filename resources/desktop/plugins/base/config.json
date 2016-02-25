@@ -1,0 +1,11 @@
+{
+  "name": "base",
+  "version": "0.1.0",
+  "description": "JFMS Desktop plugin",
+  "author": "yes-soft",
+  "dependencies": {
+    "desktop": "^3.5.5"
+  },
+  "type": "plugin",
+  "root": true
+}

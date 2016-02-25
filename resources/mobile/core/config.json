@@ -1,0 +1,9 @@
+{
+  "name": "mobile",
+  "version": "0.1.0",
+  "description": "JFMS Mobile Core",
+  "author": "yes-soft",
+  "dependencies": {
+  },
+  "type": "mobile"
+}

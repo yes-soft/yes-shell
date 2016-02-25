@@ -1,0 +1,10 @@
+{
+  "name": "theme",
+  "version": "0.1.0",
+  "description": "JFMS Desktop Core theme",
+  "author": "yes-soft",
+  "dependencies": {
+    "desktop": "^3.5.5"
+  },
+  "type": "theme"
+}
